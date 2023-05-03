@@ -9,7 +9,7 @@
             $this->host = 'localhost';
             $this->user = 'root';
             $this->pass = '';
-            $this->db = 'myapp';
+            $this->db = 'sf_db';
         }
 
         public function conectar(){
