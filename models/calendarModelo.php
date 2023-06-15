@@ -11,8 +11,8 @@ class CalendarModelo extends Model
             return $resultado = mysqli_fetch_all($datos, MYSQLI_ASSOC);
         
         }
-        public function agregar($title, $start, $end, $duration, $ticket, $client, $site, $typeact, $description, $userid){
-            $sql = "INSERT INTO tbl_horario (id, title, start, end, duration, ticket, id_client, id_site, id_activity, description, id_usuario) VALUES (NULL, '".$title."', '".$start."', '".$end."', '".$duration."', '".$ticket."', '".$client."', '".$site."', '".$typeact."', '".$description."', '".$userid."')";
+        public function agregar($title, $start, $end, $durationMinutos, $ticket, $client, $site, $typeact, $description, $userid){
+            $sql = "INSERT INTO tbl_horario (id, title, start, end, duration, ticket, id_client, id_site, id_activity, description, id_usuario) VALUES (NULL, '".$title."', '".$start."', '".$end."', '".$durationMinutos."', '".$ticket."', '".$client."', '".$site."', '".$typeact."', '".$description."', '".$userid."')";
 			$db = $this->getDB()->conectar();
 			$result = $db->query($sql);
 				if ($result) {
@@ -22,8 +22,8 @@ class CalendarModelo extends Model
 				}
 			return $res;         
 		}
-        public function modificar($id, $title, $start, $end, $duration, $ticket, $client, $site, $typeact, $description){ 
-            $sql = "UPDATE `tbl_horario` SET title='".$title."', start='".$start."', end='".$end."', ticket='".$ticket."', id_client= '".$client."', id_site= '".$site."', description='".$description."', id_activity='".$typeact."' duration='".$duration."' WHERE id='".$id."'";
+        public function modificar($id, $title, $start, $end, $durationMinutos, $ticket, $client, $site, $typeact, $description){ 
+			$sql = "UPDATE `tbl_horario` SET `title` = '".$title."', `start` = '".$start."', `end` = '".$end."', `duration` = '".$durationMinutos."', `ticket` = '".$ticket."', `id_client` = '".$client."', `id_site` = '".$site."', `description` = '".$description."', `id_activity` = '".$typeact."' WHERE `id` = '".$id."'";
             $db = $this->getDB()->conectar();
 			$result = $db->query($sql);
 				if ($result) {
@@ -45,8 +45,8 @@ class CalendarModelo extends Model
 			return $res;
 
 		}
-		public function dragOver($start, $end, $id, $duration){
-        $sql = "UPDATE tbl_horario SET start='".$start."', end='".$end."' duration='".$duration."' WHERE id='".$id."'";
+		public function dragOver($start, $end, $id, $durationMinutos){
+		$sql = "UPDATE `tbl_horario` SET `start` = '".$start."', `end` = '".$end."', `duration` = '".$durationMinutos."' WHERE `id` = '".$id."'";
 		$db = $this->getDB()->conectar();
 		$result= $db->query($sql);
 			if ($result) {

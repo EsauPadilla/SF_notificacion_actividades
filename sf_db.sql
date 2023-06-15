@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-04-2023 a las 01:57:55
+-- Tiempo de generación: 15-06-2023 a las 21:36:58
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -17,8 +17,11 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
+
 CREATE DATABASE IF NOT EXISTS `sf_db` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `sf_db`;
+
+--
 -- Base de datos: `sf_db`
 --
 
@@ -28,16 +31,17 @@ USE `sf_db`;
 -- Estructura de tabla para la tabla `tbl_actividad`
 --
 
+DROP TABLE IF EXISTS `tbl_actividad`;
 CREATE TABLE `tbl_actividad` (
   `id` int(11) NOT NULL,
-  `activity` varchar(100) NOT NULL
+  `name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `tbl_actividad`
 --
 
-INSERT INTO `tbl_actividad` (`id`, `activity`) VALUES
+INSERT INTO `tbl_actividad` (`id`, `name`) VALUES
 (1, 'Análisis'),
 (2, 'Desarrollo'),
 (3, 'Construcción'),
@@ -52,6 +56,7 @@ INSERT INTO `tbl_actividad` (`id`, `activity`) VALUES
 -- Estructura de tabla para la tabla `tbl_cliente`
 --
 
+DROP TABLE IF EXISTS `tbl_cliente`;
 CREATE TABLE `tbl_cliente` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL
@@ -62,8 +67,7 @@ CREATE TABLE `tbl_cliente` (
 --
 
 INSERT INTO `tbl_cliente` (`id`, `name`) VALUES
-(0, ''),
-(1, 'FLEXI'),
+(1, 'OFICINA LEON'),
 (2, 'SAN JACINTO'),
 (3, 'NIPPON '),
 (4, 'TRACUSA '),
@@ -72,7 +76,8 @@ INSERT INTO `tbl_cliente` (`id`, `name`) VALUES
 (7, 'DKS'),
 (8, 'CONVER '),
 (9, 'BADER '),
-(10, 'CUZCATLAN ');
+(10, 'CUZCATLAN '),
+(11, 'FLEXI');
 
 -- --------------------------------------------------------
 
@@ -80,13 +85,14 @@ INSERT INTO `tbl_cliente` (`id`, `name`) VALUES
 -- Estructura de tabla para la tabla `tbl_horario`
 --
 
+DROP TABLE IF EXISTS `tbl_horario`;
 CREATE TABLE `tbl_horario` (
   `id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `start` datetime NOT NULL,
   `end` datetime NOT NULL,
   `duration` int(11) NOT NULL,
-  `ticket` int(11) DEFAULT NULL,
+  `ticket` varchar(11) NOT NULL DEFAULT 'st',
   `id_client` int(11) DEFAULT NULL,
   `id_site` int(11) NOT NULL,
   `description` text DEFAULT NULL,
@@ -94,34 +100,23 @@ CREATE TABLE `tbl_horario` (
   `id_usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `tbl_horario`
---
-
-INSERT INTO `tbl_horario` (`id`, `title`, `start`, `end`, `duration`, `ticket`, `id_client`, `id_site`, `description`, `id_activity`, `id_usuario`) VALUES
-(3, 'prueba 2', '2023-04-20 14:00:00', '2023-04-20 15:00:00', 60, 1234, 10, 1, 'esto es una pruba', 3, 1),
-(4, 'prueba ultima', '2023-04-20 15:00:00', '2023-04-20 17:00:00', 120, 123, 7, 1, 'esta es la ultima prueba', 4, 1),
-(5, 'prueba 2', '2023-04-27 13:00:00', '2023-04-27 18:00:00', 300, 12345, 9, 1, 'esto es una prueba de inserción', 4, 1),
-(6, 'sitio web', '2023-04-28 10:30:00', '2023-04-28 15:30:00', 300, 12345, 1, 1, 'se genero un eb para gestionar actividades del personal de sf', 4, 1),
-(7, 'prueba de activitie', '2023-04-28 15:30:00', '2023-04-28 17:30:00', 120, 345, 1, 1, 'prueba 2', 1, 1),
-(10, 'prueba de estudio', '2023-04-27 07:00:00', '2023-04-27 14:00:00', 420, 123456, 0, 1, 'prueba de estudio', 6, 15);
-
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tbl_lugar`
 --
 
+DROP TABLE IF EXISTS `tbl_lugar`;
 CREATE TABLE `tbl_lugar` (
   `id` int(11) NOT NULL,
-  `site` varchar(100) NOT NULL
+  `name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `tbl_lugar`
 --
 
-INSERT INTO `tbl_lugar` (`id`, `site`) VALUES
+INSERT INTO `tbl_lugar` (`id`, `name`) VALUES
 (1, 'Remoto'),
 (2, 'Flexi');
 
@@ -131,6 +126,7 @@ INSERT INTO `tbl_lugar` (`id`, `site`) VALUES
 -- Estructura de tabla para la tabla `tbl_rol`
 --
 
+DROP TABLE IF EXISTS `tbl_rol`;
 CREATE TABLE `tbl_rol` (
   `id` int(11) NOT NULL,
   `nombre` varchar(50) NOT NULL
@@ -150,24 +146,63 @@ INSERT INTO `tbl_rol` (`id`, `nombre`) VALUES
 -- Estructura de tabla para la tabla `tbl_usuario`
 --
 
+DROP TABLE IF EXISTS `tbl_usuario`;
 CREATE TABLE `tbl_usuario` (
   `id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(150) NOT NULL,
   `rol_id` int(11) NOT NULL,
   `status` int(11) NOT NULL,
-  `name` varchar(100) DEFAULT NULL
+  `name` varchar(100) DEFAULT NULL,
+  `phone` varchar(10) DEFAULT NULL,
+  `description` varchar(100) DEFAULT NULL,
+  `adress` varchar(100) DEFAULT NULL,
+  `img` varchar(1000) DEFAULT 'http://localhost/portalSF/public/assets/img/Img_perfil/default.png'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `tbl_usuario`
 --
 
-INSERT INTO `tbl_usuario` (`id`, `username`, `password`, `rol_id`, `status`, `name`) VALUES
-(1, 'esau@admin', 'f865b53623b121fd34ee5426c792e5c33af8c227', 1, 1, 'Esau Padilla'),
-(15, 'ivan_lopez@local', '8cb2237d0679ca88db6464eac60da96345513964', 2, 1, 'ivan lopez');
+INSERT INTO `tbl_usuario` (`id`, `username`, `password`, `rol_id`, `status`, `name`, `phone`, `description`, `adress`, `img`) VALUES
+(1, 'esau@admin', 'f865b53623b121fd34ee5426c792e5c33af8c227', 1, 1, 'Esau Padilla', '4777525679', 'ing. sistemas computacionales', 'pera real 308', 'http://localhost/portalSF/public/assets/img/Img_perfil/default.png'),
+(19, 'esau@local', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', 2, 1, 'esau', '477752567', 'ingeniero de software', 'pera real 308', 'http://localhost/portalSF/public/assets/img/Img_perfil/default.png');
 
 -- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vista_horario`
+-- (Véase abajo para la vista actual)
+--
+DROP VIEW IF EXISTS `vista_horario`;
+CREATE TABLE `vista_horario` (
+`id` int(11)
+,`title` varchar(255)
+,`start` datetime
+,`end` datetime
+,`duration` int(11)
+,`ticket` varchar(11)
+,`client_name` varchar(100)
+,`site_name` varchar(100)
+,`description` text
+,`activity_name` varchar(100)
+,`user_name` varchar(100)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vista_horario`
+--
+DROP TABLE IF EXISTS `vista_horario`;
+
+DROP VIEW IF EXISTS `vista_horario`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_horario`  AS SELECT `h`.`id` AS `id`, `h`.`title` AS `title`, `h`.`start` AS `start`, `h`.`end` AS `end`, `h`.`duration` AS `duration`, `h`.`ticket` AS `ticket`, `c`.`name` AS `client_name`, `l`.`name` AS `site_name`, `h`.`description` AS `description`, `a`.`name` AS `activity_name`, `u`.`name` AS `user_name` FROM ((((`tbl_horario` `h` left join `tbl_cliente` `c` on(`h`.`id_client` = `c`.`id`)) left join `tbl_lugar` `l` on(`h`.`id_site` = `l`.`id`)) left join `tbl_actividad` `a` on(`h`.`id_activity` = `a`.`id`)) left join `tbl_usuario` `u` on(`h`.`id_usuario` = `u`.`id`))  ;
+
+--
+-- Índices para tablas volcadas
+--
+
 --
 -- Indices de la tabla `tbl_actividad`
 --
@@ -217,13 +252,13 @@ ALTER TABLE `tbl_usuario`
 -- AUTO_INCREMENT de la tabla `tbl_horario`
 --
 ALTER TABLE `tbl_horario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_usuario`
 --
 ALTER TABLE `tbl_usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- Restricciones para tablas volcadas
@@ -245,5 +280,9 @@ ALTER TABLE `tbl_usuario`
   ADD CONSTRAINT `fk_rol_id` FOREIGN KEY (`rol_id`) REFERENCES `tbl_rol` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
-CREATE VIEW `vista_horario` AS SELECT h.id, h.title, h.start, h.end, h.duration, h.ticket, c.name AS client_name, l.site AS site_name, h.description, a.activity AS activity_name, u.name AS user_name FROM `tbl_horario` h LEFT JOIN `tbl_cliente` c ON h.id_client = c.id LEFT JOIN `tbl_lugar` l ON h.id_site = l.id LEFT JOIN `tbl_actividad` a ON h.id_activity = a.id LEFT JOIN `tbl_usuario` u ON h.id_usuario = u.id;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
+--- VIEW
+CREATE VIEW `vista_horario` AS SELECT h.id, h.title, h.start, h.end, h.duration, h.ticket, c.name AS client_name, l.name AS site_name, h.description, a.name AS activity_name, u.name AS user_name FROM `tbl_horario` h LEFT JOIN `tbl_cliente` c ON h.id_client = c.id LEFT JOIN `tbl_lugar` l ON h.id_site = l.id LEFT JOIN `tbl_actividad` a ON h.id_activity = a.id LEFT JOIN `tbl_usuario` u ON h.id_usuario = u.id;
