@@ -1,10 +1,8 @@
-<footer>
-    <div class="footer clearfix mb-0 text-muted">
-        <div class="float-start">
-            <p>2023 &copy; SF Solution</p>
-        </div>
-        <div class="float-end">
-            <p><span class="text-danger"><i class="bi bi-heart"></i></span> by <a href=""></a></p>
+<footer class="py-4 bg-light mt-auto">
+    <div class="container-fluid px-4">
+        <div class="d-flex align-items-center justify-content-between small">
+            <div class="text-muted">2023 &copy; SF Solution</div>
+
         </div>
     </div>
 </footer>

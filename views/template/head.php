@@ -1,9 +1,12 @@
-<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $this->title ?></title>
-    
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="<?=URL?>public/assets/css/bootstrap.css">
-    <link rel="stylesheet" href="<?=URL?>public/assets/css/app.css">
-    <link rel="shortcut icon" href="<?=URL?>public/assets/images/favicon.spng" type="image/x-icon">
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title><?php echo $this->title ?></title>
+<link href="<?= URL ?>public/css/styles.css" rel="stylesheet" />
+<link rel="shortcut icon" href="<?= URL ?>public/assets/img/logo/favicon.png" type="image/x-icon">
+<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
+
+
